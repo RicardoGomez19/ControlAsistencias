@@ -1,0 +1,71 @@
+#tabla-empleado{
+height: 340px;
+}
+
+@media only screen and (max-width: 768px) {
+    #tabla-empleado {
+            height: 480px;
+            text-align: center;
+        }
+}
+#form-empleado{
+    height: 100%;
+}
+
+#tabla-puestos {
+    height: 340px;
+}
+
+@media only screen and (max-width: 768px) {
+    #tabla-puestos {
+        height: 530px;
+        text-align: center;
+    }
+}
+
+
+
+#new {
+    margin-left: 80px;
+    
+    
+}
+
+#sync {
+    margin-left: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+    #form-empleado {
+        height: 100%;
+    }
+
+    #new {
+        margin-left: 100px;
+        margin-top: 15px;
+    }
+
+    #sync{
+        margin-left: 2px;
+    }
+}
+
+
+#tabla-historial{
+    height: 300px;
+}
+
+@media only screen and (max-width: 768px) {
+    #tabla-historial {
+        height: 350px;
+    }
+}
+
+#escriFolio{
+margin-top: 10px;
+}
+@media only screen and (max-width: 768px) {
+    #escriFolio {
+        margin-top: 0px;
+    }
+}

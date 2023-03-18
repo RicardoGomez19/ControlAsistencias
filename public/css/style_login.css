@@ -1,0 +1,70 @@
+.body {
+    /* background-image: url("images/Grupo-izamal-1024x589.png");  */
+    background-color: rgb(0, 162, 224);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#admin{
+        font-size: 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        color: black;
+}
+
+.login-wrap img {
+    display: block;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+}
+#input{
+    
+    border-radius: 4%;
+    margin-top: 10px;
+    justify-content: center;
+    
+    
+}
+
+#input input {
+    
+    margin-top: 5px;
+    margin-bottom: 0px;
+    background-color: antiquewhite;
+    border: 1px solid skyblue;
+}
+#input span {
+
+    margin-top: 5px;
+    background-color: antiquewhite;
+    margin-bottom: 0px;
+}
+
+#form {
+    background-color: white;
+    border-radius: 5%;
+    
+}
+
+
+#boton {
+    background-color: rgb(0, 162, 224);
+
+    margin-top: 15px;
+    margin-left: 34.5%;
+}
+
+@media only screen and (max-width: 768px) {
+    .mheader {
+        width: 100%;
+        height: auto;
+        display: table;
+    }
+
+    #boton {
+        background-color: rgb(0, 162, 224);
+        margin-left: 34.5%;
+    }
+}
+

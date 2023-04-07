@@ -50,17 +50,23 @@ Route::get('/dashboard',[App\Http\Controllers\Dashboard::class,'index'])->name('
 
 Route::get('emple', function(){
     return App\Models\Empleado::all();
-});
+})->middleware('auth');
 
 ////////////////////////////////////contenido empleados////////////////////////////////////////
 
 // Route::get('/emple', function(){
 //     return view('recept.empleados.empleados');
 // });
+Route::get( '/empleados', [App\Http\Controllers\EmpleadosController::class, 'index'])->name('empleados')->middleware('auth');
+Route::post('/empleados', [App\Http\Controllers\EmpleadosController::class, 'buscar'])->name('empleados')->middleware('auth');
+// Route::get('/empleados', function () {
+//     return view('recept.empleados.empleados'); })->middleware('auth');
+// Route::match(['get', 'post'], 'empleados', function () {
+//     return view('recept.empleados.empleados');
+// })->middleware('auth');
+//Route::get('/empleados',[App\Http\Controllers\EmpleadosController::class,'index'])->name('empleados')->middleware('auth');
 
-Route::get('/empleados',[App\Http\Controllers\EmpleadosController::class,'index'])->name('empleados')->middleware('auth');
-
-Route::get('/empleados/{folio}',[App\Http\Controllers\EmpleadosController::class,'show']);
+Route::get('/empleados/{folio}',[App\Http\Controllers\EmpleadosController::class,'show'])->middleware('auth');
 
 Route::get('/empleado/create',[App\Http\Controllers\EmpleadosController::class,'create'])->name('empleado/create')->middleware('auth');
 
@@ -90,7 +96,7 @@ Route::get('/salarios', [App\Http\Controllers\ReturnSalario::class,'index'])->na
 ///////////////////////////////////////sessionHistorialsAdmin////////////////////////////////////
 Route::get('his', function(){
     return App\Models\Historial::all();
-});
+})->middleware('auth');
 
 Route::get('/historial', [App\Http\Controllers\HistorialController::class,'index'])->name('historial')->middleware('auth');
 

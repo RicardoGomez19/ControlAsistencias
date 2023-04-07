@@ -23,7 +23,7 @@
                       <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Escriba su folio..." aria-label="Recipient's username" aria-describedby="button-addon2" wire:model="folio">
 
-                        <button wire:click="ObtenerDat()" class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
+                        <button wire:click="ObtenerDat()" class="btn btn-outline-success" type="button" id="button-addon2">Buscar</button>
                       </div>
                     </div>
                   </div>

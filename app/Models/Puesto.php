@@ -19,7 +19,8 @@ class Puesto extends Model
 
     protected $fillable=[
         
-        'puesto'
+        'puesto',
+        'status'
     ];
 
 }

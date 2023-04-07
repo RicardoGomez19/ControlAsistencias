@@ -18,8 +18,12 @@ new Vue({
         puesto:'',
         banderaModal:true,
         id_puesto:'',
-        buscar:'',
-
+        buscar: '',
+        status:'1',
+        // variables de paginacion
+		paginaActual: 1,
+		mostrarPorPagina: 6,
+    	// fin variables de paginacion
 
 
     },
@@ -37,24 +41,32 @@ new Vue({
 
         ActivarModal(){
             
-        this.banderaModal=true;
-
-        this.puesto='';
-            $('#ModalPuesto').modal('show');
+            this.banderaModal=true;
+            this.puesto = '';
+            this.status = '1'; 
+        $('#ModalPuesto').modal('show');
         },
 
         puesto_store(){
 
         let puestoNuevo={
-            puesto:this.puesto
-        };
+            puesto: this.puesto,
+            status: this.status,
+            };
+
+            if (
+                !puestoNuevo.puesto) {
+                swal("Por favor", "Rellene todos los campos del formulario", "warning");
+                return
+            };
 
         this.$http.post(apiPuesto, puestoNuevo).then(function(json){
             $('#ModalPuesto').modal('hide');
                 
                 this.puesto_index();
 
-                this.puesto='';
+            this.puesto = '';
+            this.status = '1';
 
             }).catch(function(json){
                 
@@ -107,7 +119,13 @@ new Vue({
         puesto_update(){
 
             let PuestoActualizar={
-                puesto:this.puesto
+                puesto: this.puesto,
+                status: this.status,
+            };
+            if (
+                !PuestoActualizar.puesto) {
+                swal("Por favor", "Rellene todos los campos del formulario", "warning");
+                return
             };
 
             this.$http.patch(apiPuesto + '/' + this.id_puesto,PuestoActualizar).then(function(json){
@@ -120,7 +138,20 @@ new Vue({
 
                 console.log(json);
             });
-        }
+        },
+        // metodos de paginacion
+		siguientePagina: function () {
+			if (this.paginaActual < this.numeroDePaginas) { this.paginaActual++ }
+		},
+
+		anteriorPagina: function () {
+			if (this.paginaActual != 1) { this.paginaActual-- }
+		},
+
+		seccionarPagina: function (pagina) {
+			this.paginaActual = pagina;
+		},
+        // fin metodos de paginacion
 
     },
 
@@ -135,9 +166,20 @@ new Vue({
         return this.puestos.filter((puesto)=>{
             return puesto.puesto.toLowerCase().match(this.buscar.toLowerCase().trim())
         });
-    },
+        },
 
+        // paginacion
+		numeroDePaginas: function () {
+			return Math.ceil(this.filtrarPuesto.length / this.mostrarPorPagina);
+		},
 
+		paginar: function () {
+			const start = (this.paginaActual - 1) * this.mostrarPorPagina;
+			const end = this.paginaActual * this.mostrarPorPagina;
+			return this.filtrarPuesto.slice(start, end);
+		},
+        // fin de paginacion
     }
+    //fin computed
 
 });

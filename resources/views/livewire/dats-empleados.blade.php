@@ -28,7 +28,7 @@
                       <tr>
 
                         <th>Folio</th>
-                        <th>Fotografia</th>
+                        <!-- <th>Fotografia</th> -->
                         <th>Nombre</th>
                         <th>Apellido_p</th>
                         <th>Apellido_m</th>
@@ -40,11 +40,11 @@
                       @foreach ($empleados as $empleado)
                       <tr>
                         <td class="serial">{{$empleado->folio}}</td>
-                        <td class="avatar">
+                        <!-- <td class="avatar">
                           <div class="round-img">
                             <a><img class="rounded-circle" alt="" width="60px" height="60px" src="{{asset('storage'.'/'.$empleado->imagen)}}" alt=""></a>
                           </div>
-                        </td>
+                        </td> -->
                         <td> {{$empleado->nombre}}</td>
                         <td> <span>{{$empleado->apellido_p}}</span> </td>
                         <td> <span>{{$empleado->apellido_m}}</span> </td>

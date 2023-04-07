@@ -1,4 +1,4 @@
-<div>
+<div class="col-lg-12">
 
   <div class="container">
     <div class="card-tools">
@@ -33,7 +33,6 @@
     </div>
   </div>
 
-
   <div class="col-12">
     <div class="card">
       <div class="card-header">
@@ -41,7 +40,7 @@
 
         <div class="card-tools">
           <div class="input-group col-12">
-            <input type="text" name="table_search" class="form-control float-right" wire:model="buscar" placeholder="Escriba el folio">
+            <input type="text" name="table_search" class="form-control float-right" wire:model.debounce.500ms="buscar" placeholder="Escriba el nombre">
           </div>
         </div>
 
@@ -49,7 +48,7 @@
     </div>
     <!-- /.card-header -->
     <div id="tabla-historial" class="card-body table-responsive p-0">
-      <table class="table text-nowrap">
+      <table class="tabla text-nowrap">
         <thead style="background-color: rgb(0, 162, 224);" class="text-white">
           <tr>
             <!--  <th> id</th> -->
@@ -108,9 +107,25 @@
           @endforeach
 
         </tbody>
+
+
+        <tr>
+          <th style="background-color: rgb(244, 246, 249); border:rgb(244, 246, 249)"></th>
+          <!-- <th colspan="7" style="text-align: right; background-color: white;">TOTAL:</th>
+          <td> MXN</td> -->
+        </tr>
+
       </table>
+
     </div>
+
     <!-- /.card-body -->
+
   </div>
 
+</div>
+<div class="container table-responsive" style="text-align: center;">
+  <div class="text-center" style="display: inline-block;">
+    {{ $history->links('pagination::bootstrap-4') }}
+  </div>
 </div>

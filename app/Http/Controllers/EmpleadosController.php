@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Storage;
 
+//elemento de paginacion 
+use Livewire\WithPagination;
 
+
+///libreria de carbon
+
+use Carbon\Carbon;
 
 class EmpleadosController extends Controller
 {     
@@ -24,27 +30,30 @@ class EmpleadosController extends Controller
      * Metodo para el filtro de registros
      * 
      */
-    public function buscar(Request $request)
-    {
-        $buscar = $request->input('buscar');
+    // public function buscar(Request $request)
+    // {
+    //     $buscar = $request->input('buscar');
 
-        $todosEmpleados = Empleado::where('status', '1')
-        ->where(function ($query) use ($buscar) {
-            $query->where('nombre', 'LIKE', '%' . $buscar . '%')
-                ->orWhere('apellido_p', 'LIKE', '%' . $buscar . '%')
-                ->orWhere('apellido_m', 'LIKE', '%' . $buscar . '%');
-        })
-        ->get();
 
-        if (count($todosEmpleados) == 0) {
-            $empleados=Empleado::where('status', '1')->orderBy('folio', 'asc')->get();
-                return view('recept.empleados.empleados', ['empleados' => [],
-                    'empleados' => $empleados,
-                    'mensaje' => 'No se encontraron empleados con esos nombres/apellidos.']);
-        }
+    //     $todosEmpleados = Empleado::where('status', '1')
+    //     ->where(function ($query) use ($buscar) {
+    //         $query->where('nombre', 'LIKE', '%' . $buscar . '%')
+    //             ->orWhere('apellido_p', 'LIKE', '%' . $buscar . '%')
+    //             ->orWhere('apellido_m', 'LIKE', '%' . $buscar . '%');
+                
+    //     })
+    //     ->get();
+
+    //     if (count($todosEmpleados) == 0) {
+    //         $empleados=Empleado::where('status', '1')->orderBy('folio', 'asc')->get();
+    //             return view('recept.empleados.empleados', ['empleados' => [],
+    //                 'empleados' => $empleados,
+    //                 'mensaje' => 'No se encontraron empleados con esos nombres/apellidos.']);
+    //     }
+
+    //      return view('recept.empleados.empleados', ['empleados' => $todosEmpleados]);
         
-        return view('recept.empleados.empleados', ['empleados' => $todosEmpleados]);
-    }
+    // }
 
     /**
      * Display a listing of the resource.
@@ -55,9 +64,9 @@ class EmpleadosController extends Controller
     public function index()
     {
         //
-        $empleados=Empleado::where('status', '1')->orderBy('folio', 'asc')->get();
-
-        return view('recept.empleados.empleados',compact('empleados'));
+   
+        return view('recept.empleados.empleados');
+        
     }
 
     /**
@@ -84,14 +93,22 @@ class EmpleadosController extends Controller
         $rules = [
             'folio'=>'required',
             'nombre' => 'required',
-            'imagen' => 'required'
+            'telefono' => 'required',
+            'apellido_p' => 'required',
+            'apellido_m' => 'required',
+            'imagen' => 'required',
+            'password'=>'required'
 
         ];
 
         $messages = [
-            'folio.required' => 'Es obligatorio agrega un folio.',
-            'nombre.required' => 'Es obligatorio agrega un nombre.',
-            'imagen.required' => 'Es obligatorio agrega una imagen.',
+            'folio.required' => 'Es obligatorio agregar un folio.',
+            'nombre.required' => 'Es obligatorio agregar un nombre.',
+            'telefono.required' => 'Es obligatorio agregar un numero de telefono.',
+            'apellido_p.required' => 'Es obligatorio agregar un apellido paterno',
+            'apellido_m.required' => 'Es obligatorio agregar un apellido materno',
+            'imagen.required' => 'Es obligatorio agregar una imagen.',
+            'password.required' => 'Es obligatorio agregar una contraseña.',
             
         ];
 
@@ -99,7 +116,7 @@ class EmpleadosController extends Controller
     
         $empleado  = Empleado::where('folio', $folio)->get()->first();
         if ($empleado) {
-            return back()->withErrors(['algo' => 'El folio/nip proporcionado anteriormente ya existe, "escriba otro".']);
+            return back()->withErrors(['algo' => 'El folio proporcionado anteriormente ya existe, "escriba otro".']);
         }
         {
         $this->validate($request, $rules, $messages,[
@@ -109,7 +126,8 @@ class EmpleadosController extends Controller
             'apellido_m'=>'required', 
             'telefono'=>'required',
             'imagen'=>'required',
-            'id_puesto'=>'required']);
+            'id_puesto'=>'required',
+            'password' => 'required']);
 
             $imagen = $request -> file('imagen');
             $nombreImagen = 'empleados/'. time() . '.'.$imagen->extension();
@@ -172,12 +190,29 @@ class EmpleadosController extends Controller
      */
     public function update( Request $request, $folio)
     {
+       
        //busco el elemento
         $empleado = Empleado::find($folio);
         $imagen = $request->file('imagen');
         $imagen_antigua = $empleado['imagen'];
 
-        
+        // Obtener la contraseña actual del empleado
+        $password_actual = $empleado->password;
+
+        // Verificar si el usuario ha ingresado una nueva contraseña
+        if ($request->has('password')) {
+            $password = $request->input('password');
+            if ($password) {
+                // Si el usuario ha ingresado una nueva contraseña, crear un hash de ella
+                $password = Hash::make($password);
+            } else {
+                // Si el usuario no ha ingresado una nueva contraseña, utilizar la contraseña actual
+                $password = $password_actual;
+            }
+        } else {
+            // Si el campo de contraseña no está presente en la solicitud, utilizar la contraseña actual
+            $password = $password_actual;
+        }
        //verificacion si la variable esta tiene dato seleciona la imagen y eliminalo
         if ($imagen ) {
 
@@ -195,7 +230,7 @@ class EmpleadosController extends Controller
                 'telefono'=> $request -> input('telefono'),
                 'imagen' => $nombreImagen,
                 'id_puesto'=> $request -> input('id_puesto'),
-                'password' => Hash::make($request->input('password'))
+                'password' => $password,
             ]);
 
         }else{
@@ -206,8 +241,9 @@ class EmpleadosController extends Controller
                 'apellido_m' => $request->input('apellido_m'),
                 'telefono' => $request->input('telefono'),
                 'id_puesto' => $request->input('id_puesto'),
-                'password' => Hash::make($request->input('password'))
+                'password' => $password,
             ]);
+            
         }
 
        //retorno
@@ -245,22 +281,7 @@ class EmpleadosController extends Controller
 
         }
 
-        // $datos = DB::select("SELECT imagen FROM empleados ");
-        // //verefico si esta vacio
-        // if($datos[0]->imagen==""){
-        // //guardar la imagen
         
-        //  Empleado::where('folio', $folio)->update([
-        //     'status' => '0'
-        //  ]);
-        // }else{
-        //     //y si exxiste eliminalo
-        //     $imagen_antigua = DB::select("SELECT imagen FROM empleados");
-        //      storage::delete('public/'.$imagen_antigua[0]->imagen);
-        // }
-        // Empleado::where('folio', $folio)->update([
-            //     'status' => '0'
-            // ]);
 
         return redirect('empleados');
         

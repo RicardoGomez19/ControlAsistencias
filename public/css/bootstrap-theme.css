@@ -4170,6 +4170,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager .previous > a,
 .pager .previous > span {
   float: left;
+  
 }
 .pager .disabled > a,
 .pager .disabled > a:hover,

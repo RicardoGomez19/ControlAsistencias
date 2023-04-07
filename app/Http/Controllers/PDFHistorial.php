@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
 use App\Models\Historial;
+use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
+
 
 class PDFHistorial extends Controller
 {
@@ -124,7 +126,7 @@ class PDFHistorial extends Controller
         //----------------------------------fin de la informacion del hotel----------------------------------
 
         $pdf->ln(5);
-        $pdf->SetFont('Arial','',12,6);
+        $pdf->SetFont('Arial','B',12,6);
         $pdf->ln(2);
 
 
@@ -138,30 +140,61 @@ class PDFHistorial extends Controller
         //MARGEN INVISIBLE
         $pdf->Cell(8, 7 , '', 0, 0,'C');
         $pdf->Cell(15, 7 , 'Folio', 1, 0,'C');
-        $pdf->Cell(35, 7 , 'Empleado', 1, 0,'C');
+        $pdf->Cell(25, 7 , 'Empleado', 1, 0,'C');
         $pdf->Cell(33, 7 , 'Fecha entrada', 1, 0,'C');
-        $pdf->Cell(33, 7 , 'Hora entrada', 1, 0,'C');
-        $pdf->Cell(35, 7 , 'Hora salida', 1, 0,'C');
-        $pdf->Cell(24, 7 , 'Total de hrs', 1, 1,'C');
+        $pdf->Cell(30, 7 , 'Hora entrada', 1, 0,'C');
+        $pdf->Cell(25, 7 , 'Hora salida', 1, 0,'C');
+        $pdf->Cell(26, 7 , 'Total de hrs', 1, 0,'C');
+        $pdf->Cell(21, 7, 'Pagos', 1, 1, 'C');
 
         //---------------------------------fin de encabezado superior-------------------------
 
         $alt=10;
 
         $hrs="hrs";
-
+        $pdf->SetFont('Arial', '', 12, 6);
         //-------------------------------tabla de dat0s---------------------------------------
         //datos de la lista de asistencia
         foreach ($history as $his) {
         $pdf->Cell(8,$alt,'',0,0);
 
         $pdf->Cell(15,$alt,$his->folio,1,0,'C');
-        $pdf->Cell(35,$alt,utf8_decode($his->empleados->nombre),1,0,'C');
+        $pdf->Cell(25,$alt,utf8_decode($his->empleados->nombre),1,0,'C');
         $pdf->Cell(33,$alt,$his->fecha_entrada,1,0,'C');
-        $pdf->Cell(33,$alt,$his->hora_entrada,1,0,'C');
-        $pdf->Cell(35,$alt,utf8_decode($his->hora_salida),1,0,'C'); 
-        $pdf->Cell(24,$alt,$his->totalhr .$hrs,1,1,'C'); 
+        $pdf->Cell(30,$alt,$his->hora_entrada,1,0,'C');
+        $pdf->Cell(25,$alt,utf8_decode($his->hora_salida),1,0,'C'); 
+        $pdf->Cell(26,$alt,$his->totalhr .$hrs,1,0,'C');
+        $pdf->Cell(21, $alt, $his->id, 1, 1, 'C'); 
         }
+
+        // $total = DB::table('historials')
+        //     ->select(DB::raw('SUM(id) as value'))
+        //     ->whereBetween('fecha_entrada', [$fecha1, $fecha2])
+        //     ->where('folio', $folio)
+        // ->first();
+        $query = DB::table('historials')
+        ->select(DB::raw('SUM(id) as value'));
+
+        if ($fecha1 && $fecha2) {
+            $query->whereBetween('fecha_entrada', [$fecha1, $fecha2]);
+        } elseif ($fecha1) {
+            $query->where('fecha_entrada', '>=', $fecha1);
+        } elseif ($fecha2) {
+            $query->where('fecha_entrada', '<=', $fecha2);
+        }
+
+        if ($folio) {
+            $query->where('folio',
+                $folio
+            );
+        }
+
+        $total = $query->first();
+
+
+        $pdf->Cell(148, 5,'',0,0);
+        $pdf->Cell(14, 10, 'Total=', 0, 0, 'R');
+        $pdf->Cell(21, $alt, "$$total->value", 1, 1, 'C');
 
         ///-----------------------------fin de la tabla de asistencia------------------------------------------
 

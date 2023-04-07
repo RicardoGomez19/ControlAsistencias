@@ -16,7 +16,7 @@ class PuestoController extends Controller
     public function index()
     {
         //
-        return $puestos=Puesto::all();
+        return $puestos=Puesto::where('status', '1')->get();
     }
 
     /**
@@ -30,6 +30,7 @@ class PuestoController extends Controller
         //
         $puesto = new Puesto();
         $puesto->puesto = $request->get('puesto');
+        $puesto->status = $request->get('status');
         $puesto->save();
 
     }
@@ -59,6 +60,7 @@ class PuestoController extends Controller
         //
         $puesto=Puesto::find($id);
         $puesto->puesto = $request->get('puesto');
+        $puesto->status = $request->get('status');
         $puesto->update();
 
     }
@@ -72,9 +74,27 @@ class PuestoController extends Controller
     public function destroy($id)
     {
         //
-        $puesto=Puesto::find($id);
-        $puesto->delete();
-
-
+        // $puesto=Puesto::find($id);
+        // $puesto->delete();
+        $puesto = Puesto::where('id_puesto', $id)->update(['status' => "0"]);
+        if (!$puesto) {
+            $error_message = [
+                "ok" => false,
+                "data" => null,
+                "error" => [
+                    "message:" => "Resource not found with id $id"
+                ]
+            ];
+            return response($error_message, 404);
+        } else {
+            $success_message = [
+                "ok" => true,
+                "data" => Puesto::where('id_puesto', $id)->get()->first(),
+                "error" => null
+            ];
+            return response($success_message, 200);
+        }
     }
+
+    
 }

@@ -1360,7 +1360,6 @@ div[data-role="editor-toolbar"] {
 
     display: inline-block;
 
-    float: right;
 
     font-size: 13px;
 
@@ -2326,7 +2325,7 @@ div[data-role="editor-toolbar"] {
 
 }
 
-}
+
 
 .panel.panel-default.panel-heading {
 
@@ -3251,12 +3250,6 @@ div[data-role="editor-toolbar"] {
 /* Widget white extras */
 
 
-
-.widget .nav-tabs > li a {
-
-
-
-}
 
 
 
@@ -4598,11 +4591,6 @@ ul.ft-link li a i {
 
 
 
-.post-btn {
-
-
-
-}
 
 
 
@@ -4828,11 +4816,6 @@ ul.ft-link li a i {
 
 }
 
-.profile-widget{
-
-    /*padding-left: 20px 15px 30px 15px;*/
-
-}
 
 .profile-widget .twt-category{
 
@@ -4923,12 +4906,6 @@ ul.ft-link li a i {
     font-weight: 300;
 
     overflow: hidden;
-
-}
-
-.profile-foot .active{
-
-
 
 }
 
@@ -5454,11 +5431,6 @@ ul.ft-link li a i {
 
 
 
-.weather-category ul li a {
-
-
-
-}
 
 
 
@@ -6442,7 +6414,7 @@ ul.inbox-pagination li {
 
   animation: square 3s linear infinite;
 
-  -webkit-background-clip: text;
+
 
   color:transparent;
 
@@ -8302,7 +8274,7 @@ table.sliders tr td {
 
     transition: left 0.25s ease-out;
 
-    -webkit-backface-visibility: hidden;
+
 
 }
 
@@ -8386,8 +8358,7 @@ table.sliders tr td {
 
     transition: 0.25s ease-out;
 
-    -webkit-backface-visibility: hidden;
-
+   
 }
 
 .has-switch span.switch-left {
@@ -8452,7 +8423,7 @@ table.sliders tr td {
 
     transition: 0.25s ease-out;
 
-    -webkit-backface-visibility: hidden;
+
 
 }
 
@@ -8570,7 +8541,7 @@ table.sliders tr td {
 
     transition: 0.14s linear;
 
-    -webkit-backface-visibility: hidden;
+
 
 }
 
@@ -8704,7 +8675,7 @@ table.sliders tr td {
 
     transition: 0.25s;
 
-    -webkit-backface-visibility: hidden;
+
 
 }
 
@@ -9154,7 +9125,6 @@ table.sliders tr td {
 
 .user-heading.alt a {
 
-    float: left;
 
     margin-right: 15px;
 
@@ -9362,13 +9332,6 @@ table.sliders tr td {
 
 
 
-.tasi-tab .media-body p {
-
-    /*color: #b8bac6;*/
-
-}
-
-
 
 
 
@@ -9472,12 +9435,6 @@ table.sliders tr td {
 
 
 
-.profile-activity .act-in  .arrow {
-
-    /*border-right: 8px solid #F4F4F4 !important;*/
-
-}
-
 .profile-activity .act-in .arrow {
 
     border-bottom: 8px solid transparent;
@@ -9500,11 +9457,6 @@ table.sliders tr td {
 
 
 
-.profile-activity .act-out  .arrow {
-
-    /*border-right: 8px solid #34aadc !important;*/
-
-}
 
 .profile-activity .act-out .arrow {
 
@@ -9583,12 +9535,6 @@ table.sliders tr td {
     height: 44px;
 
     width: 44px;
-
-}
-
-.activity-body {
-
-    /*margin-left: 80px;*/
 
 }
 

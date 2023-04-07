@@ -29,9 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!--     datepicker -->
   @stack('css')
-  <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker.min.css')}}">
-
-
+  <!-- <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker.min.css')}}"> -->
 
 
   <!-- //se define el token para tener la capacidad de utilizar los metodos ´post, la cual debemos habilitar en el kernel el token. -->
@@ -193,7 +191,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <form action="{{route('salir')}}" method="POST" style="margin: 2%;">
                   @csrf
-                  <button style="padding: 5px 25px;" class="btn btn-danger" type="submit"><i class="fas fa-sign-out-alt "></i>Cerrar</button>
+                  <a class="text-white">{{Auth::user()->name}}
+                    <button style="padding: auto;" class="btn btn-danger" type="submit"><i class="fas fa-sign-out-alt "></i> Cerrar sesión </button>
+                  </a>
                 </form>
 
               </div>
@@ -209,69 +209,71 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-info elevation-3">
+    <aside class="main-sidebar sidebar-dark-danger elevation-3">
       <!-- Brand Logo -->
       <a href="{{url('dashboard')}}" class="brand-link text-center" style="background-color: rgb(0, 162, 224);">
-        <img src="{{asset('images/impulso.jpg')}}" class="img-circle elevation-2" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 1; justify-content:center;" width="40px" height="40px">
-        <span class="brand-text text-white">IMPULSO-LIKE</span>
+        <!-- <img src="{{asset('images/impulso.jpg')}}" class="nav-icon elevation-2 text-center" alt="User Image" width="22px" height="22px"> -->
+        <span class="brand-text text-white">Control de asistencias</span>
+
       </a>
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="justify-content:left">
+        <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="justify-content:center">
           <div class="image">
             <img src="{{asset('images/impulso.jpg')}}" class="img-circle elevation-2" alt="User Image" width="40px" height="40px">
           </div>
           <div class="info">
-            <a href="" class="d-block text-white">{{Auth::user()->name}}</a>
+            <a class="d-block text-white">{{Auth::user()->name}}</a>
           </div>
-        </div>
+        </div> -->
 
         <!-- Sidebar Menu -->
+        <br>
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
             <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link active text-white">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p class="text-white">
-                  Herramientas
+                <i class="nav-icon fa fa-bars"></i>
+                <p>
+                  Contenido
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
-              <ul class="nav nav-treeview">
+              <ul class="nav nav-treeview" style="overflow-y: auto;">
 
                 <li class="nav-item">
-                  <a href="{{route('dashboard')}}" class="nav-link text-white">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <p class="text-white">Dashboard</p>
+                  <a href="/dashboard" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="{{route('empleados')}}" class="nav-link text-white">
-                    <i class="fas fa-user-friends"></i>
-                    <p class="text-white">Empleados</p>
+                  <a href="/empleados" class="nav-link">
+                    <i class="nav-icon fas fa-user-friends"></i>
+                    <p>Empleados</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('puestos')}}" class="nav-link text-white">
+                  <a href="/puestos" class="nav-link">
                     <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-toolbox"></i>
-                    <p class="text-white">Puestos</p>
+                    <i class="nav-icon fas fa-toolbox"></i>
+                    <p>Puestos</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('salarios')}}" class="nav-link text-white">
-                    <i class="fas fa-history"></i>
-                    <p class="text-white">Salarios</p>
+                  <a href="/salarios" class="nav-link">
+                    <i class="nav-icon fa fa-money-bill"></i>
+                    <p>Salarios</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('historial')}}" class="nav-link text-white">
-                    <i class="fas fa-history"></i>
-                    <p class="text-white">Historial</p>
+                  <a href="/historial" class="nav-link">
+                    <i class="nav-icon fas fa-history"></i>
+                    <p>Historial</p>
                   </a>
                 </li>
               </ul>
@@ -335,12 +337,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE App -->
   <script src="{{asset('js/adminlte.min.js')}}"></script>
 
+  <script src="{{asset('js/jsactive/active.js')}}"></script>
 
+  <script src="{{asset('js/jsactive/date.js')}}"></script>
   <!-- Script para  ejecutar el pickerData -->
-
-  <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
-
-  <script type="text/javascript">
+  <!-- <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script> -->
+  
+  <!-- <script type="text/javascript">
     $('.js-date').datepicker({
       format: "yyyy/mm/dd"
     });
@@ -348,36 +351,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $('.js-date_o').datepicker({
       format: "yyyy/mm/dd"
     });
-  </script>
-
-
-  <script type="text/javascript">
-    function mostrarSaludo() {
-
-      fecha = new Date();
-      hora = fecha.getHours();
-
-      if (hora >= 0 && hora < 12) {
-        texto = "Buenos Días";
-        imagen = "{{asset('images/sol.png')}}";
-      }
-
-      if (hora >= 12 && hora < 18) {
-        texto = "Buenas Tardes";
-        imagen = "{{asset('images/sol.png')}}";
-      }
-
-      if (hora >= 18 && hora < 24) {
-        texto = "Buenas Noches";
-        imagen = "{{asset('images/luna.png')}}";
-      }
-
-      document.images["tiempo"].src = imagen;
-
-      document.getElementById('txtsaludo').innerHTML = texto;
-
-    }
-  </script>
+  </script> -->
 
 
 </body>

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
   <link href="https://icons8.com">
   <link rel="stylesheet" href="homeland/css/bootstrap.min.css">
   <link rel="stylesheet" href="homeland/css/magnific-popup.css">
@@ -31,20 +31,7 @@
 
   <link rel="stylesheet" href="homeland/css/style.css">
 
-
-  <style type="text/css">
-    .boton {
-      text-decoration: none;
-      padding: 3px;
-      padding-left: 10px;
-      padding-right: 10px;
-      font-family: helvetica;
-      font-weight: 300;
-      font-size: 25px;
-      font-style: italic;
-      border-radius: 15px;
-    }
-  </style>
+  <link rel="stylesheet" href="{{asset('css/vistalayout.css')}}">
 
   @stack('style')
   @livewireStyles
@@ -54,7 +41,7 @@
 
 <body>
   @livewire('create-historial')
-  
+
   @livewire('dats-empleados')
 
   <div class="site-loader"></div>
@@ -81,37 +68,16 @@
   <script src="homeland/js/jquery.magnific-popup.min.js"></script>
   <script src="homeland/js/bootstrap-datepicker.min.js"></script>
   <script src="homeland/js/aos.js"></script>
-  
+
   <script src="homeland/js/main.js"></script>
 
   <script type="text/javascript" src="{{asset('js/bundle/bootstrap.bundle.min.js')}}"></script>
 
   @stack('js')
+
+  <script src="{{asset('js/modales/modales.js')}}"></script>
   <!--   
 script para ocultar el modal que viene de livwire -->
-  <script>
-    //scrip para ocultar modal
-    window.livewire.on('ocultarModal', () => {
-      $('#exampleModal').modal('hide');
-    });
-
-    //scrip para ocultar modal
-    window.livewire.on('mensajes', () => {
-      $('#mensajes').modal('show');
-    });
-
-    //mostrar modal para el update confirm 
-
-    //scrip para ocultar modal
-    window.livewire.on('MostrarModal', () => {
-      $('#salidas').modal('show');
-    });
-
-    //scrip para ocultar modal
-    window.livewire.on('concluido', () => {
-      $('#salidas').modal('hide');
-    });
-  </script>
 
 
 

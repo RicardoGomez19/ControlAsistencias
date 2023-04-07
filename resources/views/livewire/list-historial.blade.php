@@ -13,7 +13,7 @@
 						<!-- <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a> -->
 						<p class="property-title letra" hidden=""><a>id: {{$his->id_historial}}</a></p>
 						<p class="property-title letra" hidden=""><a>Folio: {{$his->folio}}</a></p>
-						<p class="property-title letra"><a>Nombre: {{$his->empleados->nombre}}</a> </p>
+						<p class="property-title letra"><a>Nombre: {{$his->empleados->nombre}} {{$his->empleados->apellido_p }} {{$his->empleados->apellido_m }}</a> </p>
 						<p class="property-title letra"><a>Fecha entrada: {{$his->fecha_entrada}} </a> </p>
 						<p class="property-title letra"><a>Hora entrada: {{$his->hora_entrada}} hrs</a> </p>
 						@if($his->id_statu=='1')

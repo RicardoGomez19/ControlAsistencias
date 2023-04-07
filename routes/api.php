@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpleadosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SalariosController;
@@ -20,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::Resource('/apiSalarios', SalariosController::class);
+Route::Resource('/apiEmpleados', EmpleadosController::class);

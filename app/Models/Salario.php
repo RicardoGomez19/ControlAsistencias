@@ -9,11 +9,11 @@ class Salario extends Model
 {
     // use HasFactory;
 
-    protected $table='salarios';
+    protected $table="salarios";
 
-    protected $primaryKey='id';
+    protected $primaryKey="id";
 
-    public $with = ['puestos'];
+    public $with = ["puestos"];
     
     public $incrementing=true;
 
@@ -25,7 +25,8 @@ class Salario extends Model
         'valor',
         'fecha_inicio',
         'fecha_fin',
-        'id_puesto'
+        'id_puesto',
+        'status'
     ];
 
     public function puestos()

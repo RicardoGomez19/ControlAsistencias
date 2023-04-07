@@ -24,8 +24,13 @@ new Vue({
         banderaModal: true,
         id_puesto: '',
         id:'',
-        buscar:'',
+        buscar: '',
+        status: '1',
 
+        // variables de paginacion
+		paginaActual: 1,
+		mostrarPorPagina: 6,
+    	// fin variables de paginacion
 
 
     },
@@ -47,12 +52,13 @@ new Vue({
 
         ActivarModal(){ 
             this.banderaModal=true;
-            this.valor = '';
             this.anio = '';
             this.mes = '';
+            this.valor = '';
             this.fecha_inicio = '';
             this.fecha_fin = '';
-            this.id_puesto ='';
+            this.id_puesto = '';
+            this.status = '1';   
 
             $('#ModalSalario').modal('show');
         },
@@ -60,31 +66,41 @@ new Vue({
         salario_store(){
 
         let salarioNuevo={
-            valor: this.valor,
+            
             anio: this.anio,
             mes: this.mes,
+            valor: this.valor,
             fecha_inicio: this.fecha_inicio,
             fecha_fin: this.fecha_fin,
-            id_puesto: this.id_puesto
-        };
+            id_puesto: this.id_puesto,
+            status: this.status,
+            };
+            if (
+                !salarioNuevo.anio ||
+                !salarioNuevo.mes ||
+                !salarioNuevo.valor ||
+                !salarioNuevo.fecha_inicio ||
+                !salarioNuevo.fecha_fin ||
+                !salarioNuevo.id_puesto) {
+                swal("Por favor", "Rellene todos los campos del formulario", "warning");
+                return
+            };
 
             this.$http.post(apiSalarios, salarioNuevo).then(function (json) {
             this.salario_index();
-            $('#ModalSalario').modal('hide');
-                
             
-
-            this.valor = '';
-            this.anio = '';
-            this.mes = '';
-            this.fecha_inicio = '';
-            this.fecha_fin = '';
-            this.id_puesto = '';
-            }).catch(function(json){
-                
-            console.log(salarioNuevo);
-            
+                this.anio = '';
+                this.mes = '';
+                this.valor = '';
+                this.fecha_inicio = '';
+                this.fecha_fin = '';
+                this.id_puesto = '';
+                this.status = '1';
+            }).catch(function (json) {
+                swal("El puesto ya tiene un salario asignado", "Intente con otro.", "error");
             });
+
+            $('#ModalSalario').modal('hide');
         },
         salario_delete(id){
             swal({
@@ -112,44 +128,54 @@ new Vue({
         },
 
         salario_edit(id){
-
+            this.banderaModal=false;
             this.id=id;
 
-            $('#ModalSalario').modal('show');
-
-                this.banderaModal=false;
-
                 this.$http.get(apiSalarios + '/' + id).then(function(json){
-
-                    this.valor = json.data.valor;
                     this.anio = json.data.anio;;
                     this.mes = json.data.mes;
+                    this.valor = json.data.valor;
                     this.fecha_inicio = json.data.fecha_inicio;
                     this.fecha_fin = json.data.fecha_fin;
-                    this.id_puesto = json.data.puestos.puesto;
+                    this.id_puesto = json.data.id_puesto;
                 });
               //console.log(id);
+            $('#ModalSalario').modal('show');
 
         },
 
         salario_update() {
             let SalarioActualizar = {
-                valor: this.valor,
+                
                 anio: this.anio,
                 mes: this.mes,
+                valor: this.valor,
                 fecha_inicio: this.fecha_inicio,
                 fecha_fin: this.fecha_fin,
-                id_puesto: this.id_puesto
+                id_puesto: this.id_puesto,
+                status: this.status,
+    
             };
-
+                if (
+                !SalarioActualizar.anio ||
+                !SalarioActualizar.mes ||
+                !SalarioActualizar.valor ||
+                !SalarioActualizar.fecha_inicio ||
+                !SalarioActualizar.fecha_fin ||
+                !SalarioActualizar.id_puesto) {
+                swal("Por favor", "Rellene todos los campos del formulario", "warning");
+                return
+            };
             this.$http.patch(apiSalarios + '/' + this.id, SalarioActualizar)
                 .then((json) => {
                 this.salario_index();
-                $('#ModalSalario').modal('hide');
+                
                 })
+                
                 .catch((error) => {
                 console.log(error);
                 });
+            $('#ModalSalario').modal('hide');
             },
 
          puestos_index: function () {
@@ -158,6 +184,20 @@ new Vue({
 
             })
         },
+         
+        // metodos de paginacion
+		siguientePagina: function () {
+			if (this.paginaActual < this.numeroDePaginas) { this.paginaActual++ }
+		},
+
+		anteriorPagina: function () {
+			if (this.paginaActual != 1) { this.paginaActual-- }
+		},
+
+		seccionarPagina: function (pagina) {
+			this.paginaActual = pagina;
+		},
+        // fin metodos de paginacion
 
 
     },
@@ -171,10 +211,28 @@ new Vue({
         //luego procede con el match a vereficar si conicide con lo que el usuario esta escribiendo-
         //el trim es para hacer una disminucion de espacios, para evitar que no encuentre valores con espacios.
         return this.salarios.filter((salario)=>{
-            return salario.valor.toLowerCase().match(this.buscar.toLowerCase().trim())
+            return salario.valor.toLowerCase().match(this.buscar.toLowerCase().trim()) ||
+                salario.puestos.puesto.toLowerCase().match(this.buscar.toLowerCase().trim())
+                
+
+                // salario.anio.toLowerCase().match(this.buscar.toLowerCase().trim()) ||
+                // salario.mes.toLowerCase().match(this.buscar.toLowerCase().trim()) ||
+                // salario.fecha_fin.toLowerCase().match(this.buscar.toLowerCase().trim()) ||
+                // salario.fecha_inicio.toLowerCase().match(this.buscar.toLowerCase().trim())
+            
         });
     },
+// paginacion
+		numeroDePaginas: function () {
+			return Math.ceil(this.filtrarSalario.length / this.mostrarPorPagina);
+		},
 
+		paginar: function () {
+			const start = (this.paginaActual - 1) * this.mostrarPorPagina;
+			const end = this.paginaActual * this.mostrarPorPagina;
+			return this.filtrarSalario.slice(start, end);
+		},
+        // fin de paginacion
 
     }
 

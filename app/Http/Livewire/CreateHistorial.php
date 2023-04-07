@@ -18,11 +18,13 @@ use Carbon\Carbon;
 
 class CreateHistorial extends Component
 {
-    public $folio, $nombre, $apellido_p, $apellido_m, $puesto, $id_puesto , $imagen;
+    public $folio, $nombre, $apellido_p, $apellido_m, $puesto, $id_puesto , $imagen, $mensaje4, $mensajeUser;
 
     public $dia, $hr_entrada;
 
     public $hayError = false;
+    
+    public $message = '';
 
     public function render()
     {
@@ -38,12 +40,18 @@ class CreateHistorial extends Component
 
         // Buscar si el folio ya está en uso
         $historialExistente = Historial::where('folio', $this->folio)
-            ->whereNull('hora_salida')
+            // ->whereDate('fecha_entrada', $this->dia)
+            //     ->where(function ($query) {
+            //         $query->whereNull('hora_salida')
+            //             ->orWhere('hora_salida', '>=', $this->hr_entrada);
+            //     })
+            //     ->first();
+            ->whereDate('fecha_entrada', $this->dia)
             ->first();
-
+        
         if ($historialExistente) {
             // Si ya hay un registro en curso para el folio, lanzar una excepción
-            $mensaje = "El empleado con folio {$this->folio} ya está en curso.";
+            $mensaje = "El empleado con folio {$this->folio} ya se a registrado el dia de hoy";
             session()->flash('MensajeExiste', $mensaje);
             $hayError = true;
         } else {
@@ -146,7 +154,6 @@ class CreateHistorial extends Component
             'id_statu'=>$statu,
             ]);
 
-
                 $this->folio='';
 
                 $this->dia='';
@@ -163,20 +170,27 @@ class CreateHistorial extends Component
                 $this->puesto='';
 
 
-                //ocultar modal , se utiliza el emit para ocultar el modal y se manda al script
+            //ocultar modal , se utiliza el emit para ocultar el modal y se manda al script
+                
+            // $mensaje = "Bienvenido a la empresa{} ya está en curso.";
+            // session()->flash('MensajeExiste', $mensaje);
+            // return redirect()->back
                 $this->emit('ocultarModal');
 
-            //session()->flash('exito','Bienvenido tu registro fue exitoso.');
-            // $mensaje4 = "Bienvenido, a la empresa señor {$datos['nombre']} {$datos['apellido_p']}.";
-            // session()->flash('bienvenida', $mensaje4);
-            // dd($mensaje4);
+            // session()->flash('exito','Bienvenido tu registro fue exitoso.');
+                $mensaje ="Bienvenido a la empresa";
+                $mensajeDatos="{$datos['nombre']} {$datos['apellido_p']}.";
+                
+
+                $this->emit('mensajes', $mensaje, $mensajeDatos);
+
+            //dd($mensaje);
             
-                $this->emit('mensajes');
             
         }else{
             session()->flash('Existe', 'Asigne correctamente su folio');
         }
-
+        
     }
     //fin de la funcion
     

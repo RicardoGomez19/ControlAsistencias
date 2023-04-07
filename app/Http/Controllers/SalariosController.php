@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Salario;
+use App\Models\Puesto;
 
 class SalariosController extends Controller
 {
@@ -16,7 +17,7 @@ class SalariosController extends Controller
     public function index()
     {
         //
-        return $salario = Salario::all();
+        return $salario = Salario::where('status', '1')->get();
 
     }
 
@@ -28,6 +29,12 @@ class SalariosController extends Controller
      */
     public function store(Request $request)
     {
+        $id_puesto = $request->get('id_puesto');
+
+        $salario  = Salario::where('id_puesto', $id_puesto)->get()->first();
+        if ($salario) {
+            return response("error to save", 500);
+        }
         //
         $salario = new Salario();
         $salario->anio = $request->get('anio');
@@ -36,6 +43,7 @@ class SalariosController extends Controller
         $salario->fecha_inicio = $request->get('fecha_inicio');
         $salario->fecha_fin = $request->get('fecha_fin');
         $salario->id_puesto = $request->get('id_puesto');
+        $salario->status = $request->get('status');
         $salario->save();
     }
 
@@ -68,6 +76,7 @@ class SalariosController extends Controller
         $salario->fecha_inicio = $request->get('fecha_inicio');
         $salario->fecha_fin = $request->get('fecha_fin');
         $salario->id_puesto = $request->get('id_puesto');
+        $salario->status = $request->get('status');
         $salario->update();
     }
 
@@ -80,7 +89,26 @@ class SalariosController extends Controller
     public function destroy($id)
     {
         //
-        $salario = Salario::find($id);
-        $salario->delete();
+        // $salario = Salario::find($id);
+        // $salario->delete();
+        $salario = Salario::where('id', $id)->update(['status' => "0"]);
+        if (!$salario) {
+            $error_message = [
+                "ok" => false,
+                "data" => null,
+                "error" => [
+                    "message:" => "Resource not found with id $id"
+                ]
+            ];
+            return response($error_message, 404);
+        } else {
+            $success_message = [
+                "ok" => true,
+                "data" => Salario::where('id', $id)->get()->first(),
+                "error" => null
+            ];
+            return response($success_message, 200);
+        }
     }
+
 }

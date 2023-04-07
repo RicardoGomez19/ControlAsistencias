@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Historial;
 use App\Models\Empleado;
 use App\Models\Salario;
+use Illuminate\Support\Facades\DB;
 
 //uso carbon fechas
 use Carbon\Carbon;
@@ -78,14 +79,57 @@ class ListHistorial extends Component
         
         if ($salario) {
             $salario_minimo = $salario->valor;
-            
-            // Calcular el sueldo correspondiente a las horas trabajadas
+
+            // // Calcular el sueldo correspondiente a las horas trabajadas
+            // $horas_trabajadas = intval(substr($this->totalhr, 0, 2));
+            // $minutos_trabajados = intval(substr($this->totalhr, 3, 2));
+            // $salario_por_hora = $salario_minimo / 8; // 8 horas de trabajo diarias
+
+            // if ($horas_trabajadas >= 8) {
+            //     // Si trabajó más de 8 horas, se le paga el doble por las horas extra
+            //     $horas_normales = 8;
+            //     $horas_extra = $horas_trabajadas - 8;
+            //     $salario_por_hora_extra = $salario_por_hora * 2;
+            //     $this->sueldo = ($horas_normales * $salario_por_hora) + ($horas_extra * $salario_por_hora_extra);
+            // } else {
+            //     $this->sueldo = ($horas_trabajadas * $salario_por_hora) + ($minutos_trabajados / 60 * $salario_por_hora);
+
+            //     if ($horas_trabajadas < 8) {
+            //         // Si trabajó menos de 8 horas, se le descuenta el 20% del sueldo
+            //         $this->sueldo *= 0.8;
+            //     }
+            // }
             $horas_trabajadas = intval(substr($this->totalhr, 0, 2));
             $minutos_trabajados = intval(substr($this->totalhr, 3, 2));
             $salario_por_hora = $salario_minimo / 8; // 8 horas de trabajo diarias
-            $this->sueldo = ($horas_trabajadas * $salario_por_hora) + ($minutos_trabajados / 60 * $salario_por_hora);
-        
-            // Aquí puedes hacer lo que necesites con el sueldo calculado
+            $salario_por_minuto = $salario_por_hora / 60; // Salario por minuto
+
+            if ($horas_trabajadas >= 8) {
+                // Si trabajó más de 8 horas, se le paga el doble por las horas extra
+                $horas_normales = 8;
+                $horas_extra = $horas_trabajadas - 8;
+                $minutos_extra = $minutos_trabajados;
+                $salario_por_hora_extra = $salario_por_hora * 2;
+                $salario_por_minuto_extra = $salario_por_hora_extra / 60;
+
+                // Salario por las horas trabajadas de manera normal
+                $salario_horas_normales = $horas_normales * $salario_por_hora;
+
+                // Salario por los minutos trabajados en la hora extra
+                $salario_minutos_extra = $minutos_extra * $salario_por_minuto_extra;
+
+                // Salario total
+                $this->sueldo = $salario_horas_normales + $salario_minutos_extra;
+            } else {
+                // Si trabajó menos de 8 horas, se le paga según el salario por hora y los minutos trabajados
+                $this->sueldo = ($horas_trabajadas * $salario_por_hora) + ($minutos_trabajados * $salario_por_minuto);
+
+                if ($horas_trabajadas < 8) {
+                    // Si trabajó menos de 8 horas, se le descuenta el 20% del sueldo
+                    $this->sueldo *= 0.8;
+                }
+            }
+            
             // Por ejemplo, enviar un correo electrónico o guardar la información en la base de datos
             } else {
             session()->flash('error', 'No se encontró un salario mínimo para la fecha de la entrada');
@@ -108,6 +152,7 @@ class ListHistorial extends Component
         
         if (!$consulta) {
             session()->flash('errorContra', 'Empleado no encontrado');
+            $this->password = '';
             return;
         }
         if (!password_verify($this->password, $consulta['password'])) {
@@ -115,10 +160,10 @@ class ListHistorial extends Component
             $this->password = '';
             return;
         }
-
         $statu=2;
         $id= $this->id;
         $id_puesto= $this->id_puesto;
+        
         $dato->update([
 
             'hora_salida'=>$this->hora_salida,
@@ -134,5 +179,6 @@ class ListHistorial extends Component
         $this->password = '';
         $mensaje2 = "Excelente. ¡Disfrute el resto de su día {$consulta['nombre']} {$consulta['apellido_p']}!";
         session()->flash('exit', $mensaje2);
+
     }
 }

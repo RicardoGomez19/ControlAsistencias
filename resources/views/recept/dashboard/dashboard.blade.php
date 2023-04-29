@@ -1,5 +1,4 @@
 @extends('recept.layout.index')
-
 @section('title','Dashboard')
 
 @section('contenido')
@@ -43,11 +42,32 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <img class="card-img-top" src="{{asset('images/empleados1.png')}}" width="68px" height="68px">
+                                <img class="card-img-top" src="{{asset('images/empleados1.png')}}" width="68px" height="60px">
                             </div>
                         </div>
                     </div>
                     <a class="btn btn-primary" href="{{route('empleados')}}">Ver empleados</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Historial</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
+                                    <span>Total de Historiales: </span><br>
+                                    <h4 class="text-center">{{ $totalHistoriales }}</h4>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <img class="card-img-top" width="70px" height="80px" src="{{asset('images/history1.png')}}">
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary" href="{{route('historial')}}">Ver historial</a>
                 </div>
             </div>
             <div class="col-xl-4 col-md-6 mb-4">
@@ -94,26 +114,29 @@
                     <a class="btn btn-primary" href="{{route('salarios')}}">Ver salarios</a>
                 </div>
             </div>
+
             <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Historial</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Usuarios</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
                                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
-                                    <span>Total de Historiales: </span><br>
-                                    <h4 class="text-center">{{ $totalHistoriales }}</h4>
+                                    <span>Total de usuarios:</span><br>
+                                    <h4 class="text-center">{{$totalUsuarios}}</h4>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <img class="card-img-top" width="70px" height="80px" src="{{asset('images/history1.png')}}">
+                                <img class="card-img-top" src="{{asset('images/usuarios1.jpg')}}" width="70px" height="90px">
                             </div>
+
                         </div>
                     </div>
-                    <a class="btn btn-primary" href="{{route('historial')}}">Ver historial</a>
+                    <a class="btn btn-primary" href="{{route('usuarios')}}">Ver usuarios</a>
                 </div>
+
             </div>
             <!-- <div class="col-lg-4">
                 <div class="card">

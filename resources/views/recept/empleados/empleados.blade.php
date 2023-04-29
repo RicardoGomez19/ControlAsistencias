@@ -1,6 +1,7 @@
 @extends('recept.layout.index')
 
 @section('title', 'Empleados')
+
 @section('contenido')
 
 <br>
@@ -17,6 +18,4 @@
         max-width: 20px;
         height: 20px;
     }
-
-   
 </style>

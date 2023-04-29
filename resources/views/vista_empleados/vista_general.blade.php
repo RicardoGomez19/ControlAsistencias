@@ -11,7 +11,7 @@
             <h2>Eres empleado de la empresa?</h2>
           </div>
           <p>Tendrá la capacidad de llevar a cabo la validacion de su asistencia, asignando su indenficador de empleado "FOLIO".</p>
-          <p style="color:red; font-size: 20px"><strong>"Solamente podrá hacer un registro por día"</strong></p>
+          <p style="color:red; font-size: 20px"><strong>"Solamente podrá hacer un registro al día"</strong></p>
         </div>
 
       </div>
@@ -41,16 +41,7 @@
           </a>
         </div>
 
-        <!--      <div class="col-md-6 col-lg-4">
-        <a href="#" class="service text-center">
-            <img style="width: 80px; height: 90px;" src="{{asset('images/charla.png')}}">
-          <span class="icon flaticon-camera"></span>
-          <h2 class="service-heading">Asuntos u opinioness</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt iure qui natus perspiciatis ex odio molestia.</p>
-          <p><button class="btn btn-info boton"><i class="fas fa-comment-dots"></i></button></p>
-        </a>
-      </div> -->
-
+       
       </div>
     </div>
   </div>

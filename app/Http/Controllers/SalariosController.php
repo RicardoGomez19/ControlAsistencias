@@ -31,7 +31,7 @@ class SalariosController extends Controller
     {
         $id_puesto = $request->get('id_puesto');
 
-        $salario  = Salario::where('id_puesto', $id_puesto)->get()->first();
+        $salario  = Salario::where('id_puesto', $id_puesto)->where('status', '1')->get()->first();
         if ($salario) {
             return response("error to save", 500);
         }

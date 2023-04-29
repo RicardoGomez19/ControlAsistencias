@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <link rel="shortcut icon" href="">
+  <link rel="shortcut icon" href="{{asset('images/impulso.ico')}}" type="image/x-icon" class="rounded-circle">
   <!--   framework vue -->
   <script type="text/javascript" src="{{asset('js/vue.js')}}"></script>
 
@@ -258,6 +258,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="/historial" class="nav-link">
+                    <i class="nav-icon fas fa-history"></i>
+                    <p>Historial</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/puestos" class="nav-link">
                     <!-- <i class="far fa-circle nav-icon"></i> -->
                     <i class="nav-icon fas fa-toolbox"></i>
@@ -271,9 +277,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/historial" class="nav-link">
-                    <i class="nav-icon fas fa-history"></i>
-                    <p>Historial</p>
+                  <a href="/usuarios" class="nav-link">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>Usuarios</p>
                   </a>
                 </li>
               </ul>
@@ -342,7 +348,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="{{asset('js/jsactive/date.js')}}"></script>
   <!-- Script para  ejecutar el pickerData -->
   <!-- <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script> -->
-  
+
   <!-- <script type="text/javascript">
     $('.js-date').datepicker({
       format: "yyyy/mm/dd"

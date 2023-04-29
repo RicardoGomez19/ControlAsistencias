@@ -197,10 +197,14 @@ class PDFHistorial extends Controller
         $pdf->Cell(21, $alt, "$$total->value", 1, 1, 'C');
 
         ///-----------------------------fin de la tabla de asistencia------------------------------------------
+        // Generar el nombre del archivo con la fecha actual
+        $fecha_actual = date('d-m-y');
+        $nombre_archivo = 'Reporte-de-Personal-' . $fecha_actual . '.pdf';
 
+        // Descargar el PDF con el nombre del archivo y la fecha actual
+        $pdf->Output('I', $nombre_archivo);
 
-
-        $pdf->Output();
+        // Detener la ejecución del script
         exit();
 
             

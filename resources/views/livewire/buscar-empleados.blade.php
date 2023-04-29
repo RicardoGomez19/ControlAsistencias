@@ -107,8 +107,38 @@
     </div>
     <!-- /.card-body -->
 </div>
-<div class="container table-responsive" style="text-align: center;">
-    <div class="text-center" style="display: inline-block;">
-        {{ $empleados->links('pagination::bootstrap-4') }}
+@if ($empleados->lastPage() > 1)
+    <div class="d-flex justify-content-center mt-1">
+         <ul class="pagination">
+            @php
+            $current_page = $empleados->currentPage();
+            $last_page = $empleados->lastPage();
+            $total_items = $empleados->total();
+            $show_pages = 10;
+            $half_total_links = floor($show_pages / 2);
+            $from = $current_page - $half_total_links;
+            $to = $current_page + $half_total_links;
+            if ($current_page < $half_total_links) { $to +=$half_total_links - $current_page; } if ($last_page - $current_page < $half_total_links) { $from -=$half_total_links - ($last_page - $current_page) - 1; } $from=$from < 1 ? 1 : $from; $to=$to> $last_page ? $last_page : $to;
+                @endphp
+                @if($current_page > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $empleados->previousPageUrl() }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                @endif
+                @for ($i = $from; $i <= $to; $i++) <li class="page-item {{ ($current_page == $i) ? ' active' : '' }}">
+                    <a class="page-link" href="{{ $empleados->url($i) }}">{{ $i }}</a>
+                    </li>
+                    @endfor
+                    @if($current_page < $last_page) <li class="page-item">
+                        <a class="page-link" href="{{ $empleados->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        </li>
+                        @endif
+        </ul>
     </div>
-</div>
+@endif

@@ -77,7 +77,7 @@ class EmpleadosController extends Controller
     public function create()
     {
         //
-        $puestos=Puesto::all();
+        $puestos = Puesto::where('status', '1')->get();
         return view('recept.empleados.new_empleado', compact('puestos'));
 
     }
@@ -175,8 +175,8 @@ class EmpleadosController extends Controller
     {
         //
         //
-        $id_folio = Empleado::find($folio);
-        $puestos=Puesto::all();
+        $id_folio = Empleado::where('folio', $folio)->where('status', '1')->get()->first();
+        $puestos = Puesto::where('status', '1')->get();
         return view('recept.empleados.edit_empleado',compact('id_folio','puestos'));
 
     }

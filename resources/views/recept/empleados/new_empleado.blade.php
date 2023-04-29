@@ -59,7 +59,7 @@
 
 
                 <div class="form-group">
-                    <label for="country" class=" form-control-label">Seleciona el puesto a asignar</label>
+                    <label for="country" class="form-control-label">Seleciona el puesto a asignar</label>
 
                     <select name="id_puesto" id="" class="form-control">
                         @foreach ($puestos as $puesto)
@@ -71,7 +71,7 @@
 
                 <div class="form-group">
                     <label for="contraseña" class=" form-control-label">Contraseña</label>
-                    <input type="text" id="street" name="password" placeholder="Escriba una Contraseña" class="form-control">
+                    <input type="password" id="street" name="password" placeholder="Escriba una Contraseña" class="form-control">
                 </div>
                 @error('password') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>

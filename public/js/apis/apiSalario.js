@@ -88,7 +88,8 @@ new Vue({
 
             this.$http.post(apiSalarios, salarioNuevo).then(function (json) {
             this.salario_index();
-            
+                $('#ModalSalario').modal('hide');
+                
                 this.anio = '';
                 this.mes = '';
                 this.valor = '';
@@ -100,7 +101,7 @@ new Vue({
                 swal("El puesto ya tiene un salario asignado", "Intente con otro.", "error");
             });
 
-            $('#ModalSalario').modal('hide');
+            
         },
         salario_delete(id){
             swal({
@@ -222,7 +223,7 @@ new Vue({
             
         });
     },
-// paginacion
+    // paginacion
 		numeroDePaginas: function () {
 			return Math.ceil(this.filtrarSalario.length / this.mostrarPorPagina);
 		},

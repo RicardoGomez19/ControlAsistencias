@@ -89,6 +89,8 @@ Route::apiResource('/apipuestos', PuestoController::class);
 
 Route::get('/salarios', [App\Http\Controllers\ReturnSalario::class,'index'])->name('salarios')->middleware('auth');
 
+Route::get('/usuarios', [App\Http\Controllers\ReturnUsuario::class, 'index'])->name('usuarios')->middleware('auth');
+
 // Route::get('/new', function(){
 //     return view('recept.empleados.new_empleado');
 // });

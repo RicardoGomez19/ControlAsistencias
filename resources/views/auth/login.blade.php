@@ -15,6 +15,7 @@
   <!--external css-->
   <!-- font icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="images/impulso.ico" type="image/x-icon" class="rounded-circle">
   <!-- Custom styles -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet" />
@@ -40,13 +41,13 @@
           <input type="text" class="form-control" placeholder="Username" autofocus name="username">
 
         </div>
-      {!! $errors->first('username', '<span class="help-block">:message</span>')!!} 
+        {!! $errors->first('username', '<span class="help-block">:message</span>')!!}
         <div class="input-group" id="input">
           <span class="input-group-addon"><i class="fas fa-lock fa-2x"></i></span>
           <input type="password" class="form-control" placeholder="Password" name="password" required>
 
         </div>
-         {!! $errors->first('password', '<span class="help-block" required>:message</span>')!!}
+        {!! $errors->first('password', '<span class="help-block" required>:message</span>')!!}
         <button id="boton" type="submit" class="btn btn-info btn-flat m-b-30 m-t-30" style="justify-content: center;">Acceder</button>
 
       </div>

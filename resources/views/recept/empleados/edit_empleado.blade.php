@@ -70,7 +70,7 @@
 
                 <div class="form-group">
                     <label for="password" class=" form-control-label">Contraseña</label>
-                    <input type="text" id="street" name="password" placeholder="Escriba una contraseña" class="form-control">
+                    <input type="password" id="street" name="password" placeholder="Escriba una contraseña" class="form-control">
                 </div>
                 @error('mensajePassword') <div class="alert alert-danger">{{$message}}</div> @enderror
             </div>

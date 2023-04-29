@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
-
+  <link rel="shortcut icon" href="images/impulso.ico" type="image/x-icon" class="rounded-circle" width="50px" height="50px">
   <link href="https://icons8.com">
   <link rel="stylesheet" href="homeland/css/bootstrap.min.css">
   <link rel="stylesheet" href="homeland/css/magnific-popup.css">

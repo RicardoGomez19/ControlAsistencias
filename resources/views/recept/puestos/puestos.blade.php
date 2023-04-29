@@ -1,5 +1,6 @@
 @extends('recept.layout.index')
 @section('title', 'Puestos')
+
 @section('contenido')
 <div id="puestos_api">
   <br>

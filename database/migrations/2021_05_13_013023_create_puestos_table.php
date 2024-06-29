@@ -16,6 +16,7 @@ class CreatePuestosTable extends Migration
         Schema::create('puestos', function (Blueprint $table) {
             $table->increments('id_puesto');
             $table->string('puesto')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

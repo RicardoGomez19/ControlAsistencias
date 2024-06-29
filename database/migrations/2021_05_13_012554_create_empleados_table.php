@@ -21,6 +21,8 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono', 10)->nullable();
             $table->string('imagen')->nullable();
             $table->unsignedInteger('id_puesto');
+            $table->string('password');
+            $table->string('status');
             $table->timestamps();
         });
     }
